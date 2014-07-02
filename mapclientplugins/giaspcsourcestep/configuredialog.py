@@ -1,7 +1,7 @@
 
 
 from PySide import QtGui
-from giaspcsourcestep.ui_configuredialog import Ui_ConfigureDialog
+from mapclientplugins.giaspcsourcestep.ui_configuredialog import Ui_ConfigureDialog
 
 INVALID_STYLE_SHEET = 'background-color: rgba(239, 0, 0, 50)'
 DEFAULT_STYLE_SHEET = ''
