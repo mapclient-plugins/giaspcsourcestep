@@ -23,6 +23,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
         self._configured = False # A step cannot be executed until it has been configured.
         self._category = 'PCA'
         # Add any other initialisation code here:
+        self._icon = QtGui.QImage(':/giaspcsourcestep/images/giaspcsourceicon.png')
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
