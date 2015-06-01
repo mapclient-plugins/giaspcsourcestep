@@ -21,7 +21,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
     def __init__(self, location):
         super(GIASPCSourceStep, self).__init__('GIAS PC Source', location)
         self._configured = False # A step cannot be executed until it has been configured.
-        self._category = 'PCA'
+        self._category = 'Source'
         # Add any other initialisation code here:
         self._icon = QtGui.QImage(':/giaspcsourcestep/images/giaspcsourceicon.png')
         # Ports:
