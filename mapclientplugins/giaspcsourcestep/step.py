@@ -10,7 +10,7 @@ from PySide import QtGui
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.giaspcsourcestep.configuredialog import ConfigureDialog
 
-from gias.learning import PCA
+from gias2.learning import PCA
 
 class GIASPCSourceStep(WorkflowStepMountPoint):
     '''
