@@ -61,6 +61,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
             self._configured = True
         '''
         dlg = ConfigureDialog()
+        dlg.setWorkflowLocation(self._location)
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
@@ -99,6 +100,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
         self._config.update(json.loads(string))
 
         d = ConfigureDialog()
+        d.setWorkflowLocation(self._location)
         d.identifierOccursCount = self._identifierOccursCount
         d.setConfig(self._config)
         self._configured = d.validate()
