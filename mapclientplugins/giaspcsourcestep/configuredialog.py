@@ -31,6 +31,8 @@ class ConfigureDialog(QtGui.QDialog):
         # We will use this method to decide whether the identifier is unique.
         self.identifierOccursCount = None
 
+        self._location = None
+
         self._makeConnections()
 
     def _makeConnections(self):
@@ -65,10 +67,7 @@ class ConfigureDialog(QtGui.QDialog):
         # The identifierOccursCount method is part of the interface to the workflow framework.
         idValue = self.identifierOccursCount(self._ui.idLineEdit.text())
         idValid = (idValue == 0) or (idValue == 1 and self._previousIdentifier == self._ui.idLineEdit.text())
-        if idValid:
-            self._ui.idLineEdit.setStyleSheet(DEFAULT_STYLE_SHEET)
-        else:
-            self._ui.idLineEdit.setStyleSheet(INVALID_STYLE_SHEET)
+        self._ui.idLineEdit.setStyleSheet(DEFAULT_STYLE_SHEET if idValid else INVALID_STYLE_SHEET)
 
         fileLocValid = os.path.exists(os.path.join(self._workflow_location, self._ui.fileLocLineEdit.text()))
         self._ui.fileLocLineEdit.setStyleSheet(DEFAULT_STYLE_SHEET if fileLocValid else INVALID_STYLE_SHEET)
@@ -102,11 +101,21 @@ class ConfigureDialog(QtGui.QDialog):
         self._ui.idLineEdit.setText(config['identifier'])
         self._ui.fileLocLineEdit.setText(config['PC Filename'])
 
+    def setWorkflowLocation(self, location):
+        self._location = location
+
     def _fileLocClicked(self):
+<<<<<<< HEAD
         location, _ = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
         if location:
             self._previousFileLoc = location
             self._ui.fileLocLineEdit.setText(os.path.relpath(location, self._workflow_location))
+=======
+        location = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
+        if location[0]:
+            self._previousFileLoc = location[0]
+            self._ui.fileLocLineEdit.setText(os.path.relpath(location[0], self._location))
+>>>>>>> c172bcb6b507e9d59bff39d411abbf22999bbca5
 
     def _fileLocEdited(self):
         self.validate()
