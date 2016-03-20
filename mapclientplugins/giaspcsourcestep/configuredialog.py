@@ -105,17 +105,10 @@ class ConfigureDialog(QtGui.QDialog):
         self._location = location
 
     def _fileLocClicked(self):
-<<<<<<< HEAD
         location, _ = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
         if location:
             self._previousFileLoc = location
             self._ui.fileLocLineEdit.setText(os.path.relpath(location, self._workflow_location))
-=======
-        location = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
-        if location[0]:
-            self._previousFileLoc = location[0]
-            self._ui.fileLocLineEdit.setText(os.path.relpath(location[0], self._location))
->>>>>>> c172bcb6b507e9d59bff39d411abbf22999bbca5
 
     def _fileLocEdited(self):
         self.validate()
