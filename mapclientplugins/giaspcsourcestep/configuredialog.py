@@ -20,6 +20,8 @@ class ConfigureDialog(QtGui.QDialog):
         self._ui = Ui_Dialog()
         self._ui.setupUi(self)
 
+        self._workflow_location = None
+
         # Keep track of the previous identifier so that we can track changes
         # and know how many occurrences of the current identifier there should
         # be.
@@ -35,6 +37,9 @@ class ConfigureDialog(QtGui.QDialog):
         self._ui.idLineEdit.textChanged.connect(self.validate)
         self._ui.fileLocButton.clicked.connect(self._fileLocClicked)
         self._ui.fileLocLineEdit.textChanged.connect(self._fileLocEdited)
+
+    def setWorkflowLocation(self, location):
+        self._workflow_location = location
 
     def accept(self):
         '''
@@ -65,14 +70,11 @@ class ConfigureDialog(QtGui.QDialog):
         else:
             self._ui.idLineEdit.setStyleSheet(INVALID_STYLE_SHEET)
 
-        fileLocValid = os.path.exists(self._ui.fileLocLineEdit.text())
-        if fileLocValid:
-            self._ui.fileLocLineEdit.setStyleSheet(DEFAULT_STYLE_SHEET)
-        else:
-            self._ui.fileLocLineEdit.setStyleSheet(INVALID_STYLE_SHEET)
-            
+        fileLocValid = os.path.exists(os.path.join(self._workflow_location, self._ui.fileLocLineEdit.text()))
+        self._ui.fileLocLineEdit.setStyleSheet(DEFAULT_STYLE_SHEET if fileLocValid else INVALID_STYLE_SHEET)
+
         valid = idValid and fileLocValid
-        self._ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setEnabled(valid)
+        # self._ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setEnabled(valid)
 
         return valid
 
@@ -101,10 +103,10 @@ class ConfigureDialog(QtGui.QDialog):
         self._ui.fileLocLineEdit.setText(config['PC Filename'])
 
     def _fileLocClicked(self):
-        location = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
-        if location[0]:
-            self._previousFileLoc = location[0]
-            self._ui.fileLocLineEdit.setText(location[0])
+        location, _ = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
+        if location:
+            self._previousFileLoc = location
+            self._ui.fileLocLineEdit.setText(os.path.relpath(location, self._workflow_location))
 
     def _fileLocEdited(self):
         self.validate()
