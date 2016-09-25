@@ -101,9 +101,6 @@ class ConfigureDialog(QtGui.QDialog):
         self._ui.idLineEdit.setText(config['identifier'])
         self._ui.fileLocLineEdit.setText(config['PC Filename'])
 
-    def setWorkflowLocation(self, location):
-        self._location = location
-
     def _fileLocClicked(self):
         location, _ = QtGui.QFileDialog.getOpenFileName(self, 'Select File Location', self._previousFileLoc)
         if location:
