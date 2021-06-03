@@ -5,7 +5,7 @@ MAP Client Plugin Step
 import os.path
 import json
 
-from PySide import QtGui
+from PySide2 import QtGui, QtWidgets
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.giaspcsourcestep.configuredialog import ConfigureDialog
@@ -61,7 +61,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         '''
-        dlg = ConfigureDialog(QtGui.QApplication.activeWindow().currentWidget())
+        dlg = ConfigureDialog(QtWidgets.QApplication.activeWindow().currentWidget())
         dlg.setWorkflowLocation(self._location)
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
