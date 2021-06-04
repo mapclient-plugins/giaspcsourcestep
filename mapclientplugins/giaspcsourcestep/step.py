@@ -1,11 +1,10 @@
-
 '''
 MAP Client Plugin Step
 '''
 import os.path
 import json
 
-from PySide import QtGui
+from PySide2 import QtGui, QtWidgets
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.giaspcsourcestep.configuredialog import ConfigureDialog
@@ -21,7 +20,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
 
     def __init__(self, location):
         super(GIASPCSourceStep, self).__init__('GIAS PC Source', location)
-        self._configured = False # A step cannot be executed until it has been configured.
+        self._configured = False  # A step cannot be executed until it has been configured.
         self._category = 'Source'
         # Add any other initialisation code here:
         self._icon = QtGui.QImage(':/giaspcsourcestep/images/giaspcsourceicon.png')
@@ -51,7 +50,7 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
         The index is the index of the port in the port list.  If there is only one
         provides port for this step then the index can be ignored.
         '''
-        return self._pc # ju#principalcomponents
+        return self._pc  # ju#principalcomponents
 
     def configure(self):
         '''
@@ -61,16 +60,16 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         '''
-        dlg = ConfigureDialog(QtGui.QApplication.activeWindow().currentWidget())
+        dlg = ConfigureDialog(self._main_window)
         dlg.setWorkflowLocation(self._location)
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
         dlg.setModal(True)
-        
+
         if dlg.exec_():
             self._config = dlg.getConfig()
-        
+
         self._configured = dlg.validate()
         self._configuredObserver()
 
@@ -105,5 +104,3 @@ class GIASPCSourceStep(WorkflowStepMountPoint):
         d.identifierOccursCount = self._identifierOccursCount
         d.setConfig(self._config)
         self._configured = d.validate()
-
-
